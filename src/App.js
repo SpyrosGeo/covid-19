@@ -1,28 +1,33 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import Cards from './components/Cards/Cards'
 import Chart from './components/Charts/Chart'
 import CountryPicker from './components/CountryPicker/CountryPicker'
 import styles from './App.module.css';
-import {fetchData} from './api/index';
+import { fetchData } from './api/index';
 
 
 class App extends Component {
+  //constructor is created automaticaly.
+  state = {
+    data: {},
 
-  async componentDidMount(){
-    const data = await fetchData()
-    console.log(data)
+  }
+  async componentDidMount() {
+    const fetchedData = await fetchData()
+    this.setState({ data: fetchedData })
   }
 
-  render(){
+  render() {
+    const {data} = this.state;
     return (
       <div className={styles.container}>
-        <Cards />
+        <Cards data={data} />
         <CountryPicker />
         <Chart />
       </div>
     );
   }
-  
+
 }
 
 export default App;
